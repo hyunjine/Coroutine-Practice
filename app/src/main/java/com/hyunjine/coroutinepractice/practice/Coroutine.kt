@@ -2,9 +2,7 @@ package com.hyunjine.coroutinepractice.practice
 
 import android.util.Log
 import com.hyunjine.coroutinepractice.common.TAG
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import kotlin.coroutines.coroutineContext
 
 class Coroutine {
@@ -18,11 +16,13 @@ class Coroutine {
         }
     }
 
-    private suspend fun fetchData() = withContext(coroutineContext) {
+    private suspend fun fetchData() = withContext(Dispatchers.IO) {
+        delay(2000L)
         "hello world"
     }
 
-    private suspend fun processData(data: String) = withContext(coroutineContext) {
+    private suspend fun processData(data: String) = withContext(Dispatchers.IO) {
+        delay(2000L)
         data.uppercase()
     }
 }
