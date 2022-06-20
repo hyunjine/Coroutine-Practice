@@ -1,14 +1,11 @@
 package com.hyunjine.coroutinepractice
+
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.hyunjine.coroutinepractice.common.TAG
 import com.hyunjine.coroutinepractice.databinding.ActivityMainBinding
-import com.hyunjine.coroutinepractice.practice.Coroutine
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import kotlin.coroutines.coroutineContext
+import com.hyunjine.coroutinepractice.practice.coroutine.Test2
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -21,9 +18,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setBinding()
         initView()
-
+        Log.d(TAG, "일 시작")
     }
-    private fun initView() {
-        Coroutine().startCoroutine()
-    }
+    private fun initView() = Test2().planSchedule()
 }

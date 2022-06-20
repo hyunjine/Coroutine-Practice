@@ -1,4 +1,4 @@
-package com.hyunjine.coroutinepractice.practice
+package com.hyunjine.coroutinepractice.practice.callback
 
 import android.util.Log
 import com.hyunjine.coroutinepractice.common.TAG
