@@ -5,13 +5,13 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.hyunjine.coroutinepractice.common.TAG
 import com.hyunjine.coroutinepractice.databinding.ActivityMainBinding
-import com.hyunjine.coroutinepractice.practice.coroutine.Test2
-import io.reactivex.rxjava3.core.Observable
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlin.coroutines.coroutineContext
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val arrayList: ArrayList<String> = arrayListOf("가", "나", "다")
-
     private fun setBinding() = ActivityMainBinding.inflate(layoutInflater).also {
         binding = it
         setContentView(it.root)
@@ -19,21 +19,22 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         setBinding()
-        startObservable().doOnSubscribe {
-            Log.d(TAG, "start")
-        }.doOnComplete {
-            Log.d(TAG, "finish")
-        }.doOnError {
-            Log.d(TAG, "onCreate: ${it.message}")
-        }.subscribe {
-            Log.d(TAG, "$it")
+        MainScope().launch {
+            val fetchedData = fetchData()
+            val processedData = processData(fetchedData)
+            Log.d(TAG, processedData)
         }
     }
-    private fun startObservable(): Observable<Int> =
-        Observable.just(1, 2, 3, 2).map {
-            if (it > 2) throw Exception("하이")
-            else it
-        }
-    private fun startCoroutine() = Test2().planSchedule()
+
+    private suspend fun fetchData() = withContext(coroutineContext) {
+        Thread.sleep(1000)
+        "someThing"
+    }
+
+    private suspend fun processData(data: String) = withContext(coroutineContext) {
+        Thread.sleep(1000)
+        "Loaded: $data"
+    }
 }
